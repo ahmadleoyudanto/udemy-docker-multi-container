@@ -1,0 +1,17 @@
+language: generic # to fix build fails with "rakefile not found" (not happen yet)
+
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t alkinemokiye/docker-multi-container-client-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true alkinemokiye/docker-multi-container-client-test npm run test -- --coverage --watchAll=false --detectOpenHandles
+
+after_success:
+  - docker build -t alkinemokiye/docker-multi-container-client ./client
+  - docker build -t alkinemokiye/docker-multi-container-nginx ./nginx
+  - docker build -t alkinemokiye/docker-multi-container-server ./server
+  - docker build -t alkinemokiye/docker-multi-container-worker ./worker
