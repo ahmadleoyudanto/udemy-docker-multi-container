@@ -11,14 +11,26 @@ script:
   - docker run -e CI=true alkinemokiye/docker-multi-container-client-test npm run test -- --coverage --watchAll=false --detectOpenHandles
 
 after_success:
-  - docker build -t alkinemokiye/docker-multi-container-client ./client
-  - docker build -t alkinemokiye/docker-multi-container-nginx ./nginx
-  - docker build -t alkinemokiye/docker-multi-container-server ./server
-  - docker build -t alkinemokiye/docker-multi-container-worker ./worker
+  - docker build -t ahmadleoyudanto/docker-multi-container-client ./client
+  - docker build -t ahmadleoyudanto/docker-multi-container-nginx ./nginx
+  - docker build -t ahmadleoyudanto/docker-multi-container-server ./server
+  - docker build -t ahmadleoyudanto/docker-multi-container-worker ./worker
   # login to the docker CLI
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   # Take those images and push them to docker hub
-  - docker push alkinemokiye/docker-multi-container-client
-  - docker push alkinemokiye/docker-multi-container-nginx
-  - docker push alkinemokiye/docker-multi-container-server
-  - docker push alkinemokiye/docker-multi-container-worker
+  - docker push ahmadleoyudanto/docker-multi-container-client
+  - docker push ahmadleoyudanto/docker-multi-container-nginx
+  - docker push ahmadleoyudanto/docker-multi-container-server
+  - docker push ahmadleoyudanto/docker-multi-container-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-west-1"
+  app: "docker-multi-container"
+  env: "DockerMultiContainer-env"
+  bucket_name: "elasticbeanstalk-us-west-1-123456789012"
+  bucket_path: "docker-multi-container"
+  on:
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
