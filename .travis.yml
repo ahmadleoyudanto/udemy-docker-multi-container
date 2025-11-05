@@ -15,3 +15,10 @@ after_success:
   - docker build -t alkinemokiye/docker-multi-container-nginx ./nginx
   - docker build -t alkinemokiye/docker-multi-container-server ./server
   - docker build -t alkinemokiye/docker-multi-container-worker ./worker
+  # login to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push alkinemokiye/docker-multi-container-client
+  - docker push alkinemokiye/docker-multi-container-nginx
+  - docker push alkinemokiye/docker-multi-container-server
+  - docker push alkinemokiye/docker-multi-container-worker
