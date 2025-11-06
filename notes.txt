@@ -1,0 +1,7 @@
+- Dockerrun.aws.json
+container group must container 1 container with essentials true
+if container set the essentials to true, and the containers goes down, all other container will goes down too
+you must NOT have a Dockerrun.aws.json file in your project directory. 
+If AWS EBS sees this file the deployment will fail. If you have previously followed this course and deployed to the 
+old Multi-container platform you will need to delete this file before using the new Amazon Linux 2023 platform!!!
+
