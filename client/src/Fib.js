@@ -41,18 +41,20 @@ class Fib extends Component {
     }
 
     renderSeenIndexes() {
-        return this.state.seenIndexes.map(({number}) => number).join(', ');
+        const seenIndexes = Array.isArray(this.state.seenIndexes) ? this.state.seenIndexes : [];
+        return seenIndexes.map(({number}) => number).join(', ');
     }
 
     renderValues() {
         const entries = [];
-
-        for (let key in this.state.values) {
-            entries.push(
-                <div key={key}>
-                    For index {key} I calculated {this.state.values[key]}
-                </div>
-            );
+        if (typeof this.state.values === 'object' && this.state.values !== null) {
+            for (let key in this.state.values) {
+                entries.push(
+                    <div key={key}>
+                        For index {key} I calculated {this.state.values[key]}
+                    </div>
+                );
+            }
         }
 
         return entries;
