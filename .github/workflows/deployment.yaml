@@ -15,7 +15,7 @@ jobs:
       - run: docker run -e CI=true ahmadleoyudanto/docker-multi-container-client-test npm test
 
       - run: docker build -t ahmadleoyudanto/docker-multi-container-client ./client
-      - run: docker build -t ahmadleoyudanto/docker-multi-container-nginx ./nginx
+      # - run: docker build -t ahmadleoyudanto/docker-multi-container-nginx ./nginx
       - run: docker build -t ahmadleoyudanto/docker-multi-container-server ./server
       - run: docker build -t ahmadleoyudanto/docker-multi-container-worker ./worker
 
